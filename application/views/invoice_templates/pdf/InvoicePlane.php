@@ -243,6 +243,25 @@
                 <b><?php echo format_currency($invoice->invoice_balance); ?></b>
             </td>
         </tr>
+        <?php
+        $balance = intval($invoice->invoice_balance);
+        $currency = $custom_fields['invoice']['currency'];
+        $rate_currency = intval($custom_fields['invoice']['rate_currency']);
+        $convert = $balance * $rate_currency;
+        
+        if ($custom_fields['invoice']['convert']) {
+        ?>
+            <tr>
+                <td <?php echo($show_item_discounts ? 'colspan="5"' : 'colspan="4"'); ?> class="text-right">
+                    <b>Convert to USD</b>
+                </td>
+                <td class="text-right">
+                    <b><?php echo number_format($convert, 0, ".", ".") . " ". $currency; ?></b>
+                </td>
+            </tr>
+        <?php
+        }
+        ?>
         </tbody>
     </table>
 
@@ -255,7 +274,35 @@
             <?php echo nl2br(htmlsc($invoice->invoice_terms)); ?>
         </div>
     <?php endif; ?>
-</footer>
 
+    
+</footer>
+<?php 
+if ($custom_fields['invoice']['bank']){?>
+
+    <table style="width: 100%;">
+        <thead>
+            <tr>
+                <th style="text-align: left;">Bank</th>
+                <th style="text-align: left; width: 45%;">Pemilik Rekening</th>
+                <th style="text-align: left;">Nomor Rekening</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>IBK</td>
+                <td>Kraba hehe</td>
+                <td>12371283123</td>
+            </tr>
+            <tr>
+                <td>JAGO SYARIAH</td>
+                <td>SAUDIGIR</td>
+                <td>853769348763</td>
+            </tr>
+        </tbody>
+    </table>
+<?php
+} 
+?>
 </body>
 </html>
